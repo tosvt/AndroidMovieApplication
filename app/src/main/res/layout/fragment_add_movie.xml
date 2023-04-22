@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -86,23 +87,6 @@
             app:layout_constraintTop_toBottomOf="@id/edtPoster" />
 
         <EditText
-            android:id="@+id/edtDescription"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="top"
-            android:hint="Описание"
-            android:maxLines="1"
-            android:minHeight="48dp"
-            android:padding="10dp"
-            android:textColorHint="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtYearOfIssue" />
-
-        <EditText
             android:id="@+id/edtRaiting"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -118,41 +102,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtDescription" />
-
-        <EditText
-            android:id="@+id/edtGenre"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="top"
-            android:hint="Жанр"
-            android:maxLines="1"
-            android:minHeight="48dp"
-            android:padding="10dp"
-            android:textColorHint="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtRaiting" />
-
-        <EditText
-            android:id="@+id/edtDirector"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="top"
-            android:hint="Режиссер"
-            android:maxLines="1"
-            android:minHeight="48dp"
-            android:padding="10dp"
-            android:textColorHint="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtGenre" />
+            app:layout_constraintTop_toBottomOf="@id/edtYearOfIssue" />
 
         <EditText
             android:id="@+id/edtDuration"
@@ -170,7 +120,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtDirector" />
+            app:layout_constraintTop_toBottomOf="@id/edtRaiting" />
 
         <EditText
             android:id="@+id/edtCountry"
