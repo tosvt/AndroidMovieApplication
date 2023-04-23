@@ -14,9 +14,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DatabaseViewModel @Inject constructor(private val repository: DatabaseRepository):ViewModel(){
-    private val _movieList = MutableLiveData<DataStatus<List<MoviesEntity>>>()
-    val movieList : LiveData<DataStatus<List<MoviesEntity>>>
-    get() = _movieList
+    private val _movieList = MutableLiveData<DataStatus<List<MoviesEntity>>>() //изменяемый список фильмов
+    val movieList : LiveData<DataStatus<List<MoviesEntity>>> // данные в режиме реального времени
+    get() = _movieList //получаем список контактов
 
     init {
         getAllMovies()
@@ -26,10 +26,23 @@ class DatabaseViewModel @Inject constructor(private val repository: DatabaseRepo
         repository.saveMovie(entity)
     }
 
-
     fun getAllMovies() = viewModelScope.launch {
         //_movieList.postValue(DataStatus.loading())
         repository.getAllMovies()
+            .catch { _movieList.postValue(DataStatus.error(it.message.toString())) }
+            .collect{ _movieList.postValue(DataStatus.success(it, it.isEmpty()))}
+    }
+
+    fun sortedASC() = viewModelScope.launch {
+        //_movieList.postValue(DataStatus.loading())
+        repository.sortedASC()
+            .catch { _movieList.postValue(DataStatus.error(it.message.toString())) }
+            .collect{ _movieList.postValue(DataStatus.success(it, it.isEmpty()))}
+    }
+
+    fun sortedDESC() = viewModelScope.launch {
+        //_movieList.postValue(DataStatus.loading())
+        repository.sortedDESC()
             .catch { _movieList.postValue(DataStatus.error(it.message.toString())) }
             .collect{ _movieList.postValue(DataStatus.success(it, it.isEmpty()))}
     }

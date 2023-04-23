@@ -34,7 +34,19 @@ class MoviesAdapter @Inject constructor() : RecyclerView.Adapter<MoviesAdapter.V
                 tvRate.text = item.raiting
                 tvLang.text = item.country
                 tvMovieDateRelease.text = item.yearofissue
-
+                val moviePosterURL = item.poster
+                /*ImgMovie.load(moviePosterURL){
+                    crossfade(true)
+                    placeholder(R.drawable.poster_placeholder)
+                    scale(Scale.FILL)
+                }*/
+                /*imgRoot.load(itemView.context, moviePosterURL) {
+                    crossfade(true)
+                    placeholder(R.drawable.poster_placeholder)
+                    target {
+                        (binding.imgMovie as ShapeableImageView).setImageDrawable(it)
+                    }
+                }*/
 
             }
         }

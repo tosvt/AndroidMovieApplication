@@ -62,6 +62,34 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+            mainToolbar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.add -> {
+                        //btnShowFragment.visibility = View.GONE
+                        // Создание экземпляра фрагмента
+                        val myFragment = AddMovieFragment()
+                        // Получение менеджера фрагментов
+                        val fragmentManager = supportFragmentManager
+                        // Создание транзакции фрагментов
+                        val fragmentTransaction = fragmentManager.beginTransaction()
+                        // Замена текущего фрагмента на новый фрагмент
+                        fragmentTransaction.replace(R.id.fragment_container, myFragment)
+                        // Добавление транзакции в стек возврата
+                        fragmentTransaction.addToBackStack(null)
+                        // Применение транзакции
+                        fragmentTransaction.commit()
+
+                        return@setOnMenuItemClickListener true
+                    }
+                    R.id.baselineSort -> {
+                        filter()
+                        return@setOnMenuItemClickListener true
+                    }
+                    else -> {
+                        return@setOnMenuItemClickListener false
+                    }
+                }
+            }
         }
     }
 
@@ -73,6 +101,22 @@ class MainActivity : AppCompatActivity() {
                 empty.isVisible(false, list)
             }
         }
+    }
+
+    private fun filter() {
+        val builder = AlertDialog.Builder(this)
+        val sortItem = arrayOf("Новые (по умолчанию)", "Названию : A-Z", "Названию : Z-A")
+        builder.setSingleChoiceItems(sortItem, selectedItem) { dialog, item ->
+            when (item) {
+                0 -> viewModel.getAllMovies()
+                1 -> viewModel.sortedASC()
+                2 -> viewModel.sortedDESC()
+            }
+            selectedItem = item
+            dialog.dismiss()
+        }
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.show()
     }
 
 }
