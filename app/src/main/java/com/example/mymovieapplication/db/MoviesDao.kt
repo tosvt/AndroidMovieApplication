@@ -16,9 +16,6 @@ interface MoviesDao {
     @Query("SELECT * FROM $MOVIES_TABLE")
     fun getAllMovies() : Flow<MutableList<MoviesEntity>>
 
-    @Query("DELETE FROM $MOVIES_TABLE")
-    fun deleteAllMovies()
-
     @Query("SELECT * FROM $MOVIES_TABLE ORDER BY title ASC ")
     fun sortedASC() : Flow<MutableList<MoviesEntity>>
 

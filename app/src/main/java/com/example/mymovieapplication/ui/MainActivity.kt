@@ -6,6 +6,7 @@ import android.view.Menu
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mymovieapplication.R
 import com.example.mymovieapplication.adapter.MoviesAdapter
@@ -85,6 +86,9 @@ class MainActivity : AppCompatActivity() {
                         filter()
                         return@setOnMenuItemClickListener true
                     }
+                    R.id.baselineSearch -> {
+                        return@setOnMenuItemClickListener false
+                    }
                     else -> {
                         return@setOnMenuItemClickListener false
                     }
@@ -118,5 +122,22 @@ class MainActivity : AppCompatActivity() {
         val alertDialog: AlertDialog = builder.create()
         alertDialog.show()
     }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_toolbar, menu)
+        val search = menu.findItem(R.id.baselineSearch)
+        val searchView = search.actionView as SearchView
+        searchView.queryHint = "Search..."
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
 
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.searchMovie(newText!!)
+                return true
+            }
+
+        })
+        return super.onCreateOptionsMenu(menu)
+    }
 }

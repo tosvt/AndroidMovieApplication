@@ -47,5 +47,9 @@ class DatabaseViewModel @Inject constructor(private val repository: DatabaseRepo
             .collect{ _movieList.postValue(DataStatus.success(it, it.isEmpty()))}
     }
 
-
+    fun searchMovie(title : String) = viewModelScope.launch {
+        //_movieList.postValue(DataStatus.loading())
+        repository.searchMovie(title).collect(){
+            _movieList.postValue(DataStatus.success(it, it.isEmpty()))}
+    }
 }

@@ -9,5 +9,5 @@ class DatabaseRepository @Inject constructor(private val dao: MoviesDao) {
     fun getAllMovies() = dao.getAllMovies()
     fun sortedASC() = dao.sortedASC()
     fun sortedDESC() = dao.sortedDESC()
-
+    fun searchMovie(title : String) = dao.searchMovie(title)
 }
