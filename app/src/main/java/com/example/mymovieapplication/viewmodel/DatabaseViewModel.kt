@@ -9,6 +9,7 @@ import com.example.mymovieapplication.repository.DatabaseRepository
 import com.example.mymovieapplication.utils.DataStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,12 +19,25 @@ class DatabaseViewModel @Inject constructor(private val repository: DatabaseRepo
     val movieList : LiveData<DataStatus<List<MoviesEntity>>> // данные в режиме реального времени
     get() = _movieList //получаем список контактов
 
+    private val _movieDetails = MutableLiveData<DataStatus<MoviesEntity>>()
+    val movieDetails : LiveData<DataStatus<MoviesEntity>>
+    get() = _movieDetails
+
     init {
         getAllMovies()
     }
 
-    fun saveMovie(entity: MoviesEntity) = viewModelScope.launch {
-        repository.saveMovie(entity)
+    fun saveMovie(isEdit: Boolean, entity: MoviesEntity) = viewModelScope.launch {
+        if(isEdit){
+            repository.updateMovie(entity)
+        } else {
+            repository.saveMovie(entity)
+        }
+
+    }
+
+    fun deleteMovie(entity: MoviesEntity) = viewModelScope.launch {
+        repository.deleteMovie(entity)
     }
 
     fun getAllMovies() = viewModelScope.launch {
@@ -51,5 +65,11 @@ class DatabaseViewModel @Inject constructor(private val repository: DatabaseRepo
         //_movieList.postValue(DataStatus.loading())
         repository.searchMovie(title).collect(){
             _movieList.postValue(DataStatus.success(it, it.isEmpty()))}
+    }
+
+    fun getMovie(id: Int) = viewModelScope.launch {
+        repository.getMovie(id).collect{
+            _movieDetails.postValue(DataStatus.success(it, false))
+        }
     }
 }

@@ -1,5 +1,7 @@
 package com.example.mymovieapplication.utils
-
+//Отвечает за определение текущего состояния данных, когда мы их получаем
+//также, этот класс можно использовать при работе, например, с API,
+//когда нужно проверить состояние данных
 data class DataStatus<out T> (
     val status : Status,
     val data : T?=null,

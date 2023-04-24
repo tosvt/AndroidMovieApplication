@@ -1,5 +1,7 @@
 package com.example.mymovieapplication.ui
 
+import android.graphics.Canvas
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -7,15 +9,20 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mymovieapplication.R
 import com.example.mymovieapplication.adapter.MoviesAdapter
 import com.example.mymovieapplication.databinding.ActivityMainBinding
 import com.example.mymovieapplication.ui.addmovie.AddMovieFragment
+import com.example.mymovieapplication.utils.Constants.BUNDLE_ID
 import com.example.mymovieapplication.utils.DataStatus
 import com.example.mymovieapplication.viewmodel.DatabaseViewModel
 import com.example.mymovieapplication.viewmodel.isVisible
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -28,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    var selectedItem = 0
+    private var selectedItem = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -94,10 +101,82 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+
+            val swipeCallBack = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    return false
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val position = viewHolder.adapterPosition
+                    val movie = moviesAdapter.differ.currentList[position]
+                    when(direction){
+                        ItemTouchHelper.LEFT -> {
+                            viewModel.deleteMovie(movie)
+                            Snackbar.make(binding.root, "Фильм удален!", Snackbar.LENGTH_LONG).apply {
+                                setAction("UNDO"){
+                                    viewModel.saveMovie(false, movie)
+                                }
+                            }.show()
+                        }
+                        ItemTouchHelper.RIGHT -> {
+                            val addMovieFragment = AddMovieFragment()
+                            val bundle = Bundle()
+                            bundle.putInt(BUNDLE_ID, movie.id)
+                            addMovieFragment.arguments = bundle
+                            supportFragmentManager.beginTransaction()
+                                .replace(R.id.fragment_container, addMovieFragment, "AddContactFragmentTag")
+                                .addToBackStack(null)
+                                .commit()
+
+                        }
+                    }
+                }
+
+                override fun onChildDraw(
+                    c: Canvas,
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    dX: Float,
+                    dY: Float,
+                    actionState: Int,
+                    isCurrentlyActive: Boolean
+                ) {
+                    RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                        .addSwipeLeftLabel("Удалить")
+                        .addSwipeLeftBackgroundColor(Color.RED)
+                        .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
+                        .setSwipeLeftLabelColor(Color.WHITE)
+                        .setSwipeLeftActionIconTint(Color.WHITE)
+                        .addSwipeRightLabel("Изменить")
+                        .addSwipeRightBackgroundColor(Color.GREEN)
+                        .addSwipeLeftActionIcon(R.drawable.baseline_edit_24)
+                        .setSwipeRightLabelColor(Color.WHITE)
+                        .setSwipeLeftActionIconTint(Color.WHITE)
+                        .create()
+                        .decorate()
+
+                    super.onChildDraw(
+                        c,
+                        recyclerView,
+                        viewHolder,
+                        dX,
+                        dY,
+                        actionState,
+                        isCurrentlyActive
+                    )
+                }
+            }
+            val itemTouchHelper = ItemTouchHelper(swipeCallBack)
+            itemTouchHelper.attachToRecyclerView(rvMovies)
         }
     }
 
-    fun showEmpty(isShow: Boolean) {
+    private fun showEmpty(isShow: Boolean) {
         binding.apply {
             if (isShow) {
                 empty.isVisible(true, list)
