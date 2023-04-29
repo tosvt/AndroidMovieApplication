@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.Coil
 import coil.load
+import coil.size.Scale
 import com.example.mymovieapplication.R
 import com.example.mymovieapplication.databinding.ActivityItemsBinding
 import com.example.mymovieapplication.db.MoviesEntity
@@ -35,18 +36,17 @@ class MoviesAdapter @Inject constructor() : RecyclerView.Adapter<MoviesAdapter.V
                 tvLang.text = item.country
                 tvMovieDateRelease.text = item.yearofissue
                 val moviePosterURL = item.poster
-                /*ImgMovie.load(moviePosterURL){
+
+
+                ImgMovie.load(moviePosterURL) {
                     crossfade(true)
                     placeholder(R.drawable.poster_placeholder)
+                    //scale(Scale.FILL)
                     scale(Scale.FILL)
-                }*/
-                /*imgRoot.load(itemView.context, moviePosterURL) {
-                    crossfade(true)
-                    placeholder(R.drawable.poster_placeholder)
-                    target {
-                        (binding.imgMovie as ShapeableImageView).setImageDrawable(it)
-                    }
-                }*/
+                    // xml android:scaleType="fitXY"
+                    // xml android:scaleType="centerCrop"
+
+                }
 
             }
         }

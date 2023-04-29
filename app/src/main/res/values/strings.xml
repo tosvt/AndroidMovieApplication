@@ -2,7 +2,7 @@
     <string name="app_name">My Movie Application</string>
     <string name="Search">Поиск</string>
     <string name="sort">Отсортировать</string>
-    <string name="deleteAll">Удалить все</string>
+    <string name="add">Добавить фильм</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
