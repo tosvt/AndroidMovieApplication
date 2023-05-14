@@ -30,7 +30,7 @@ class AuthActivity : AppCompatActivity() {
         biometricPrompt= BiometricPrompt(this,executor,object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)
-                Toast.makeText(this@AuthActivity, "Ошибка авторизации: $errString", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@AuthActivity, "Ошибка входа: $errString", Toast.LENGTH_LONG).show()
             }
 
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
@@ -42,14 +42,14 @@ class AuthActivity : AppCompatActivity() {
 
             override fun onAuthenticationFailed() {
                 super.onAuthenticationFailed()
-                Toast.makeText(this@AuthActivity, "Авторизация не удалась", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@AuthActivity, "Вход не удался", Toast.LENGTH_LONG).show()
             }
         })
 
         promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Sample Ttile")
-            .setSubtitle("Sample subtitle")
-            .setNegativeButtonText("Sample Negative")
+            .setTitle("Вход в приложение")
+            .setSubtitle(" ")
+            .setNegativeButtonText(" ")
             .build()
         binding.btnLogin.setOnClickListener{
             biometricPrompt.authenticate(promptInfo)
@@ -61,12 +61,12 @@ class AuthActivity : AppCompatActivity() {
         when(biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)){
             BiometricManager.BIOMETRIC_SUCCESS -> {
                 Log.d("MY_APP_TAG", "App can auth using bio")
-                binding.tvMsg.text = "Авторизация возможна, нажмите кнопку Войти"
+                binding.tvMsg.text = "Вход возможен, нажмите на кнопку ниже"
                 binding.btnLogin.isEnabled=true
             }
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE-> {
                 Log.d("MY_APP_TAG", "Bio feautures are currently unavailable")
-                binding.tvMsg.text = "Авторизация невозможна"
+                binding.tvMsg.text = "Вход невозможен"
                 binding.btnLogin.isEnabled=false
             }
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
