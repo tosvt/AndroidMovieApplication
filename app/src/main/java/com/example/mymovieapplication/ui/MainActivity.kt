@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -28,14 +29,15 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     @Inject
     lateinit var moviesAdapter: MoviesAdapter
 
     private val viewModel: DatabaseViewModel by viewModels()
 
-    private lateinit var binding: ActivityMainBinding
-
     private var selectedItem = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -93,9 +95,7 @@ class MainActivity : AppCompatActivity() {
                         filter()
                         return@setOnMenuItemClickListener true
                     }
-                    R.id.baselineSearch -> {
-                        return@setOnMenuItemClickListener false
-                    }
+
                     else -> {
                         return@setOnMenuItemClickListener false
                     }
@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
                         ItemTouchHelper.LEFT -> {
                             viewModel.deleteMovie(movie)
                             Snackbar.make(binding.root, "Фильм удален!", Snackbar.LENGTH_LONG).apply {
-                                setAction("UNDO"){
+                                setAction("Отменить"){
                                     viewModel.saveMovie(false, movie)
                                 }
                             }.show()
@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity() {
                             bundle.putInt(BUNDLE_ID, movie.id)
                             addMovieFragment.arguments = bundle
                             supportFragmentManager.beginTransaction()
-                                .replace(R.id.fragment_container, addMovieFragment, "AddContactFragmentTag")
+                                .replace(R.id.fragment_container, addMovieFragment, "AddFragmentTag")
                                 .addToBackStack(null)
                                 .commit()
 
@@ -154,21 +154,12 @@ class MainActivity : AppCompatActivity() {
                         .setSwipeLeftActionIconTint(Color.WHITE)
                         .addSwipeRightLabel("Изменить")
                         .addSwipeRightBackgroundColor(Color.GREEN)
-                        .addSwipeLeftActionIcon(R.drawable.baseline_edit_24)
                         .setSwipeRightLabelColor(Color.WHITE)
-                        .setSwipeLeftActionIconTint(Color.WHITE)
+                        .setSwipeRightActionIconTint(Color.WHITE)
+                        .addSwipeRightActionIcon(R.drawable.ic_baseline_edit_24)
                         .create()
                         .decorate()
-
-                    super.onChildDraw(
-                        c,
-                        recyclerView,
-                        viewHolder,
-                        dX,
-                        dY,
-                        actionState,
-                        isCurrentlyActive
-                    )
+                    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                 }
             }
             val itemTouchHelper = ItemTouchHelper(swipeCallBack)
@@ -200,23 +191,5 @@ class MainActivity : AppCompatActivity() {
         }
         val alertDialog: AlertDialog = builder.create()
         alertDialog.show()
-    }
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_toolbar, menu)
-        val search = menu.findItem(R.id.baselineSearch)
-        val searchView = search.actionView as SearchView
-        searchView.queryHint = "Search..."
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                viewModel.searchMovie(newText!!)
-                return true
-            }
-
-        })
-        return super.onCreateOptionsMenu(menu)
     }
 }

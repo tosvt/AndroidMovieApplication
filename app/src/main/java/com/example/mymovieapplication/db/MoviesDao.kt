@@ -15,7 +15,7 @@ interface MoviesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveMovie(moviesEntity: MoviesEntity)
 
-    @Query("SELECT * FROM $MOVIES_TABLE")
+    @Query("SELECT * FROM $MOVIES_TABLE ORDER BY id DESC")
     fun getAllMovies() : Flow<MutableList<MoviesEntity>>
 
     @Query("SELECT * FROM $MOVIES_TABLE ORDER BY title ASC ")
@@ -23,9 +23,6 @@ interface MoviesDao {
 
     @Query("SELECT * FROM $MOVIES_TABLE ORDER BY title DESC ")
     fun sortedDESC() : Flow<MutableList<MoviesEntity>>
-
-    @Query("SELECT * FROM $MOVIES_TABLE WHERE title LIKE '%' || :title || '%' ")
-    fun searchMovie(title:String) : Flow<MutableList<MoviesEntity>>
 
     @Update
     suspend fun updateMovie(entity: MoviesEntity)

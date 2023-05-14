@@ -9,7 +9,7 @@ data class DataStatus<out T> (
     val isEmpty : Boolean?=false
 ) {
     enum class Status {
-        LOADING , SUCCESS , ERROR
+        LOADING, SUCCESS, ERROR
     }
     companion object{
         fun <T> loading() : DataStatus<T>{

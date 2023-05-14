@@ -29,7 +29,6 @@ object DatabaseModule {
     fun provideDao(db: MoviesDB) = db.movieDao()
 
     @Provides
-    @Singleton
     fun provideEntity() = MoviesEntity()
 
 }

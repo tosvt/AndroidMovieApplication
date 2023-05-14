@@ -1,5 +1,6 @@
 package com.example.mymovieapplication.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -22,13 +23,16 @@ class MoviesAdapter @Inject constructor() : RecyclerView.Adapter<MoviesAdapter.V
         return ViewHolder()
     }
 
-    override fun getItemCount(): Int = differ.currentList.size
+    override fun getItemCount(): Int {
+        return differ.currentList.size
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.setData(differ.currentList[position])
     }
 
     inner class ViewHolder : RecyclerView.ViewHolder(binding.root){
+        @SuppressLint("SetTextI18n")
         fun setData(item : MoviesEntity){
             binding.apply {
                 tvMovieName.text = item.title

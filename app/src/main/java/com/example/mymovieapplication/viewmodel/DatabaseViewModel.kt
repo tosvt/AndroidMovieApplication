@@ -17,11 +17,11 @@ import javax.inject.Inject
 class DatabaseViewModel @Inject constructor(private val repository: DatabaseRepository):ViewModel(){
     private val _movieList = MutableLiveData<DataStatus<List<MoviesEntity>>>() //изменяемый список фильмов
     val movieList : LiveData<DataStatus<List<MoviesEntity>>> // данные в режиме реального времени
-    get() = _movieList //получаем список контактов
+        get() = _movieList //получаем список
 
     private val _movieDetails = MutableLiveData<DataStatus<MoviesEntity>>()
     val movieDetails : LiveData<DataStatus<MoviesEntity>>
-    get() = _movieDetails
+        get() = _movieDetails
 
     init {
         getAllMovies()
@@ -33,7 +33,6 @@ class DatabaseViewModel @Inject constructor(private val repository: DatabaseRepo
         } else {
             repository.saveMovie(entity)
         }
-
     }
 
     fun deleteMovie(entity: MoviesEntity) = viewModelScope.launch {
@@ -41,30 +40,24 @@ class DatabaseViewModel @Inject constructor(private val repository: DatabaseRepo
     }
 
     fun getAllMovies() = viewModelScope.launch {
-        //_movieList.postValue(DataStatus.loading())
+        _movieList.postValue(DataStatus.loading())
         repository.getAllMovies()
             .catch { _movieList.postValue(DataStatus.error(it.message.toString())) }
             .collect{ _movieList.postValue(DataStatus.success(it, it.isEmpty()))}
     }
 
     fun sortedASC() = viewModelScope.launch {
-        //_movieList.postValue(DataStatus.loading())
+        _movieList.postValue(DataStatus.loading())
         repository.sortedASC()
             .catch { _movieList.postValue(DataStatus.error(it.message.toString())) }
             .collect{ _movieList.postValue(DataStatus.success(it, it.isEmpty()))}
     }
 
     fun sortedDESC() = viewModelScope.launch {
-        //_movieList.postValue(DataStatus.loading())
+        _movieList.postValue(DataStatus.loading())
         repository.sortedDESC()
             .catch { _movieList.postValue(DataStatus.error(it.message.toString())) }
             .collect{ _movieList.postValue(DataStatus.success(it, it.isEmpty()))}
-    }
-
-    fun searchMovie(title : String) = viewModelScope.launch {
-        //_movieList.postValue(DataStatus.loading())
-        repository.searchMovie(title).collect(){
-            _movieList.postValue(DataStatus.success(it, it.isEmpty()))}
     }
 
     fun getMovie(id: Int) = viewModelScope.launch {

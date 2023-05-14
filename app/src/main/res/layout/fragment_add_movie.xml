@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@drawable/r_win"
         android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:context=".ui.fragment.AddMovieFragment">
 
         <ImageView
@@ -27,8 +29,10 @@
             android:paddingHorizontal="32dp"
             android:paddingVertical="8dp"
             android:text="Добавить информацию о новом фильме"
-            android:textColor="#575757"
-            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="#FCDAB7"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/edtTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,8 +47,11 @@
             android:maxLines="1"
             android:minHeight="48dp"
             android:padding="10dp"
-            android:textColorHint="@color/black"
-            android:textSize="20sp"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textCursorDrawable="@color/white"
+            android:backgroundTint="@color/white"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +67,10 @@
             android:maxLines="1"
             android:minHeight="48dp"
             android:padding="10dp"
-            android:textColorHint="@color/black"
+            android:textColor="@color/white"
+            android:textCursorDrawable="@color/white"
+            android:backgroundTint="@color/white"
+            android:textColorHint="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -78,29 +88,16 @@
             android:maxLines="1"
             android:minHeight="48dp"
             android:padding="10dp"
-            android:textColorHint="@color/black"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textCursorDrawable="@color/white"
+            android:backgroundTint="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtPoster" />
 
-        <EditText
-            android:id="@+id/edtDescription"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="top"
-            android:hint="Описание"
-            android:maxLines="1"
-            android:minHeight="48dp"
-            android:padding="10dp"
-            android:textColorHint="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtYearOfIssue" />
 
         <EditText
             android:id="@+id/edtRaiting"
@@ -113,46 +110,15 @@
             android:maxLines="1"
             android:minHeight="48dp"
             android:padding="10dp"
-            android:textColorHint="@color/black"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textCursorDrawable="@color/white"
+            android:backgroundTint="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtDescription" />
-
-        <EditText
-            android:id="@+id/edtGenre"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="top"
-            android:hint="Жанр"
-            android:maxLines="1"
-            android:minHeight="48dp"
-            android:padding="10dp"
-            android:textColorHint="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtRaiting" />
-
-        <EditText
-            android:id="@+id/edtDirector"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="top"
-            android:hint="Режиссер"
-            android:maxLines="1"
-            android:minHeight="48dp"
-            android:padding="10dp"
-            android:textColorHint="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtGenre" />
+            app:layout_constraintTop_toBottomOf="@id/edtYearOfIssue" />
 
         <EditText
             android:id="@+id/edtDuration"
@@ -165,12 +131,15 @@
             android:maxLines="1"
             android:minHeight="48dp"
             android:padding="10dp"
-            android:textColorHint="@color/black"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textCursorDrawable="@color/white"
+            android:backgroundTint="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtDirector" />
+            app:layout_constraintTop_toBottomOf="@id/edtRaiting" />
 
         <EditText
             android:id="@+id/edtCountry"
@@ -182,7 +151,10 @@
             android:maxLines="1"
             android:minHeight="48dp"
             android:padding="10dp"
-            android:textColorHint="@color/black"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textCursorDrawable="@color/white"
+            android:backgroundTint="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -194,16 +166,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:paddingHorizontal="50dp"
+            android:paddingHorizontal="60dp"
             android:text="Сохранить"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:backgroundTint="#4CAF50"
+            app:backgroundTint="#FF9800"
             app:cornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtCountry" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
