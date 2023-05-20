@@ -1,8 +1,21 @@
 <resources>
-    <string name="app_name">My Movie Application</string>
-    <string name="Search">Поиск</string>
+    <string name="app_name">Моя Фильмотека</string>
     <string name="sort">Отсортировать</string>
     <string name="add">Добавить фильм</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enterbtn">Войти</string>
+    <string name="moviename">movieName</string>
+    <string name="textview">TextView</string>
+    <string name="tv">TextView</string>
+    <string name="date_release">Date Release</string>
+    <string name="text_no_film">Пока не добавлено ни одного фильма</string>
+    <string name="add_new_film_info">Добавить информацию о новом фильме</string>
+    <string name="movieTitle">Название</string>
+    <string name="moviePoster">Постер</string>
+    <string name="movieYearIssue">Год издания</string>
+    <string name="movieRate">Рейтинг</string>
+    <string name="movieDuration">Длительность</string>
+    <string name="movieCountry">Страна производства</string>
+    <string name="btnSave">Сохранить</string>
 </resources>

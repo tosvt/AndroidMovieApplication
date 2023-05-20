@@ -86,21 +86,19 @@ class AddMovieFragment : Fragment() {
                 duration = edtDuration.text.toString()
                 poster = edtPoster.text.toString()
 
-                //val titlePattern = "^[a-zA-Z0-9]{1,50}\$".toRegex()
-
                 when {
                     title.isEmpty() -> errorField = "Название"
-                    !title.matches(Regex("^[a-zA-Zа-яА-Я0-9 ]{1,20}$")) -> errorField = "Название (должно содержать буквы или цифры, не более 20 символов)"
+                    !title.matches(Regex("^[a-zA-Zа-яА-Я0-9., ]{1,100}$")) -> errorField = "Название (должно содержать буквы или цифры, не более 100 символов)"
                     year.isEmpty() -> errorField = "Год выпуска"
                     !year.matches(Regex("^\\d{4}\$")) -> errorField = "Год выпуска (должен быть в формате YYYY)"
                     country.isEmpty() -> errorField = "Страна"
-                    !country.matches(Regex("^[a-zA-Zа-яА-Я ]{1,50}\$")) -> errorField = "Страна (должна содержать только буквы, не более 50 символов)"
+                    !country.matches(Regex("^[a-zA-Zа-яА-Я, ]{1,100}\$")) -> errorField = "Страна (должна содержать только буквы, не более 100 символов)"
                     rate.isEmpty() -> errorField = "Рейтинг"
                     !rate.matches(Regex("^[0-9]+(\\.[0-9]{1,2})?\$")) -> errorField = "Рейтинг (должен быть числом с не более чем двумя знаками после запятой)"
                     duration.isEmpty() -> errorField = "Длительность"
                     !duration.matches(Regex("^[0-9]+\$")) -> errorField = "Длительность (должна быть числом)"
                     poster.isEmpty() -> errorField = "Постер"
-                    !poster.matches(Regex("^(http(s?):\\/\\/.*\\.(?:png|jpg|jpeg))\$")) -> errorField = "Ссылка должна быть вида: http(https)://ссылка.jpg(png, jpeg)"
+                    !poster.matches(Regex("^(http(s?):\\/\\/.*\\.(?:png|jpg|jpeg))\$")) -> errorField = "Ссылка должна быть вида: http://ссылка.jpg(png, jpeg)"
                 }
 
                 if (errorField != null) {
@@ -125,34 +123,6 @@ class AddMovieFragment : Fragment() {
 
                     requireActivity().onBackPressed()
                 }
-                /*if (title.isEmpty() || year.isEmpty() || country.isEmpty() || rate.isEmpty() || duration.isEmpty()) {
-                    Snackbar.make(it, "Поля обязательны для заполнения", Snackbar.LENGTH_SHORT)
-                        .show()
-                } else if(!title.matches(titlePattern) || ) {
-                    Snackbar.make(it, "Поля обязательны для заполнения", Snackbar.LENGTH_SHORT)
-                        .show()
-                } else  {
-                    entity.id = movieId
-                    entity.title = title
-                    entity.country = country
-                    entity.raiting = rate
-                    entity.yearofissue = year
-                    entity.duration = duration
-                    entity.poster = poster
-
-                    viewModel.saveMovie(isEdit, entity)
-
-                    edtTitle.setText("")
-                    edtDuration.setText("")
-                    edtCountry.setText("")
-                    edtRaiting.setText("")
-                    edtYearOfIssue.setText("")
-                    edtPoster.setText("")
-
-                    requireActivity().onBackPressed()
-
-                }*/
-
             }
         }
     }
